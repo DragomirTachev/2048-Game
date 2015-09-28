@@ -227,6 +227,7 @@ function changeToLeft(current) {
                     $('#' + current.toString()).removeClass('hasUnit');
                     $('#' + (current - 1).toString()).find('span').text((parseInt($('#' + current.toString()).find('span').text()) * 2));
                     refreshScore(parseInt($('#' + current.toString()).find('span').text()));
+                    victoryConditions(($('#' + current.toString()).find('span').text()) * 2);
                     $('#' + current.toString()).find('span').text('');
                     $('#' + (current - 1).toString()).addClass('hasUnit');
                 }
@@ -257,6 +258,7 @@ function changeToRight(current) {
                 $('#' + current.toString()).removeClass('hasUnit');
                 $('#' + (current + 1).toString()).find('span').text((parseInt($('#' + current.toString()).find('span').text()) * 2));
                 refreshScore(parseInt($('#' + current.toString()).find('span').text()));
+                victoryConditions(($('#' + current.toString()).find('span').text()) * 2);
                 $('#' + current.toString()).find('span').text('');
                 $('#' + (current + 1).toString()).addClass('hasUnit');
             }
@@ -286,6 +288,7 @@ function changeToUp(current) {
                 $('#' + current.toString()).removeClass('hasUnit');
                 $('#' + (current - 4).toString()).find('span').text((parseInt($('#' + current.toString()).find('span').text()) * 2));
                 refreshScore(parseInt($('#' + current.toString()).find('span').text()));
+                victoryConditions(($('#' + current.toString()).find('span').text()) * 2);
                 $('#' + current.toString()).find('span').text('');
                 $('#' + (current - 4).toString()).addClass('hasUnit');
             }
@@ -301,7 +304,6 @@ function changeToDown(current) {
         //check if next bottom can take moves
         if (current <= 12) {
 
-            //alert('in');
             if (!$('#' + (current + 4).toString()).hasClass('hasUnit')) {
 
                 $('#' + current.toString()).removeClass('hasUnit');
@@ -315,11 +317,24 @@ function changeToDown(current) {
                 $('#' + current.toString()).removeClass('hasUnit');
                 $('#' + (current + 4).toString()).find('span').text((parseInt($('#' + current.toString()).find('span').text()) * 2));
                 refreshScore(parseInt($('#' + current.toString()).find('span').text()));
+                victoryConditions(($('#' + current.toString()).find('span').text()) * 2);
                 $('#' + current.toString()).find('span').text('');
                 $('#' + (current + 4).toString()).addClass('hasUnit');
             }
         }
     }
+}
+
+
+function victoryConditions(value) {
+
+    if (parseInt(value) === 2048) {
+
+        swal('CONGRATULATIONS !', 'You are the new 2048 chamption !', 'success');
+        $('#gameContent').css('display', 'none');
+        $('#newGameBtn').css('display', 'inline-block');
+    }
+
 }
 
 function importNewNumber() {
@@ -379,7 +394,7 @@ function importNewNumber() {
                 }
 
             }
-
+            //if one of these options is available,the game continues
             if (topAvailable || bottomAvailable || leftAvailable || rightAvailable) {
                 canMakeMove = true;
                 break;
@@ -406,13 +421,27 @@ function importNewNumber() {
      
     }
     else if (possibleNewPositionsCounter === 1) {
+		var twoOrFourChance = Math.round(Math.random() * 10);
+			if(twoOrFourChance < 8 ) {
+				twoOrFourChance = 2;
+			}
+			else { 
+				twoOrFourChance = 4;
+			}
         $('#' + arrayOfOptions[0].toString()).addClass('hasUnit');
-        $('#' + arrayOfOptions[0].toString()).find('span').text('2');
+        $('#' + arrayOfOptions[0].toString()).find('span').text(twoOrFourChance.toString());
     }
     else {
+		var twoOrFourChance = Math.round(Math.random() * 10);
+			if(twoOrFourChance < 8 ) {
+				twoOrFourChance = 2;
+			}
+			else { 
+				twoOrFourChance = 4;
+			}
         var random = Math.round(Math.random() * (arrayOfOptions.length - 1));
         $('#' + (arrayOfOptions[random]).toString()).addClass('hasUnit');
-        $('#' + (arrayOfOptions[random]).toString()).find('span').text('2');
+        $('#' + (arrayOfOptions[random]).toString()).find('span').text(twoOrFourChance.toString());
     }
 
     checkMaxNumberLenght();

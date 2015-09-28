@@ -25,6 +25,8 @@ function toastrInit() {
 	}
 }
 function setStartUpValues() {
+
+    $('#gameContent').css('display', 'block');
     var firstRandomStartPosition = Math.ceil(Math.random() * 15) + 1;
     var secondRandomStartPosition = firstRandomStartPosition;
 
